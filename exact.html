@@ -397,13 +397,13 @@ document.write(`
 <p>For performing a maximum likelihood estimation of the temperature, we will need probablity and log probabilities of specific energies as well as samples of energies. We detail some of this below.</p>
 <p>The probabiltiy of a given energy observation is <span class="math notranslate nohighlight">\(p(E_k)=\mathcal{Z}(\beta)^{-1}\exp(-\beta E_k)\)</span>. Thus, for a random (independent) sample <span class="math notranslate nohighlight">\(\{E_i\}_{i=1,N}\)</span>, <span class="math notranslate nohighlight">\(p(\{X_i\})=\mathcal{Z}(\beta)^{-N}\exp(-\beta \sum_{i=1}^N E_i)\)</span>. Or in terms of the sample mean, <span class="math notranslate nohighlight">\(p(\bar{E})=\mathcal{Z}(\beta)^{-N}\exp(-\beta N \bar{E})\)</span>. This is all well and good for non-degenerate systems, but there is degeracy here since there are multiple configurations (states) which correspond to the same energy.</p>
 <p>To account for this, we introduce a multiplicative factor <span class="math notranslate nohighlight">\(\Omega(E)\)</span> which counts the number of states with energy <span class="math notranslate nohighlight">\(E\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61dac48d-6cbe-4cb8-89f3-38b36d276de3">
-<span class="eqno">(1)<a class="headerlink" href="#equation-61dac48d-6cbe-4cb8-89f3-38b36d276de3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-08d1a458-2c91-4704-bc5e-32c14c12f4b7">
+<span class="eqno">(1)<a class="headerlink" href="#equation-08d1a458-2c91-4704-bc5e-32c14c12f4b7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p(E_k)=\mathcal{Z}(\beta)^{-1}\sum_{E=E_k}\exp(-\beta E)=\mathcal{Z}(\beta)^{-1}\Omega(E_k)\exp(-\beta E_k)
 \end{eqnarray}\]</div>
 <p>So then the probability of measuring a sample <span class="math notranslate nohighlight">\(\{E_i\}_{i=1,N}\)</span> becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb54efef-a88b-4553-a6d8-02d777f06cfc">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eb54efef-a88b-4553-a6d8-02d777f06cfc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-394d3eca-4e31-4252-bf32-c2567fcb5f30">
+<span class="eqno">(2)<a class="headerlink" href="#equation-394d3eca-4e31-4252-bf32-c2567fcb5f30" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p(\bar{E})&amp;=&amp; \Pi_{i=1}^N p(E_i)=\mathcal{Z}(\beta)^{-N}\Pi_{i=1}^N \Omega(E_i)\exp(-\beta E_i)
 \end{eqnarray}\]</div>
 <section id="configuration-generator-and-binary-representation-map-for-configurations">

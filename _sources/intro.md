@@ -5,9 +5,9 @@ Consider the classical 2D Ising Hamiltonian
 \mathcal{H}[\{s_i\}]=-J\,\sum_{NN} s_i\,s_j- H\,\sum\,s_i
 \end{eqnarray*}
 for a given configuration of spins $\{s_i\}$ on an $L^2$ lattice with periodic boundary conditions and nearst neighbor (NN) interactions. We will use Monte-Carlo techniques to simulate the partition function 
-$$
+\begin{eqnarray*}
 \mathcal{Z}=\exp\left(-\beta \sum_{\{s_i\}} \mathcal{H}[\{s_i\}]\right)
-$$
+\end{eqnarray*}
 
 In this notebook, we will examine aspects of Markov Chain Monte Carlo. Then using the simulated data, test various data analysis techniques. The idea of this notebook is to tie together the physics of the Ising model, Monte Carlo simulations, and statistical analysis into one project. Below we give a rough sketch of the outline of this project.
 

@@ -388,10 +388,11 @@ document.write(`
 \[\begin{eqnarray*}
 \mathcal{H}[\{s_i\}]=-J\,\sum_{NN} s_i\,s_j- H\,\sum\,s_i
 \end{eqnarray*}\]</div>
-<p>for a given configuration of spins <span class="math notranslate nohighlight">\(\{s_i\}\)</span> on an <span class="math notranslate nohighlight">\(L^2\)</span> lattice with periodic boundary conditions and nearst neighbor (NN) interactions. We will use Monte-Carlo techniques to simulate the partition function
-$<span class="math notranslate nohighlight">\(
+<p>for a given configuration of spins <span class="math notranslate nohighlight">\(\{s_i\}\)</span> on an <span class="math notranslate nohighlight">\(L^2\)</span> lattice with periodic boundary conditions and nearst neighbor (NN) interactions. We will use Monte-Carlo techniques to simulate the partition function</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{eqnarray*}
 \mathcal{Z}=\exp\left(-\beta \sum_{\{s_i\}} \mathcal{H}[\{s_i\}]\right)
-\)</span>$</p>
+\end{eqnarray*}\]</div>
 <p>In this notebook, we will examine aspects of Markov Chain Monte Carlo. Then using the simulated data, test various data analysis techniques. The idea of this notebook is to tie together the physics of the Ising model, Monte Carlo simulations, and statistical analysis into one project. Below we give a rough sketch of the outline of this project.</p>
 <p><strong>Overview of ideas:</strong></p>
 <ol class="arabic simple">
