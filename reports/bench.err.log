@@ -1,0 +1,95 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+L,T,H = 4, 3, 1
+beta = 1/T
+N_sites = L**2
+N_burnin = 400*N_sites
+N_iterations = 10**5*N_sites
+
+t0 = time()
+trace = Metropolis_update(hotstart(L), beta, H, N_burnin + N_iterations)
+trace = trace[N_burnin:]
+
+Mag_data = np.abs(trace[:,0])/N_sites
+l_m = exp_corr_len(auto_corr(Mag_data))/N_sites
+
+E_data = trace[:,1]
+l_e = exp_corr_len(auto_corr(E_data))/N_sites
+
+## compute histrogram and exact probablities
+elist = [Ham(M,H) for M in config_gen(L)]
+eset = sorted(set(elist))
+degeneracies = np.array([ (e, elist.count(e)) for e in eset])
+
+partition_function = np.sum([np.exp(-1/T*e) for e in elist ])
+prob_set = np.zeros_like(eset)
+for i,e in enumerate(eset):
+    j = np.where(degeneracies[:,0] == e)[0][0]
+    degen = degeneracies[j][1]
+    prob_set[i] = partition_function**(-1)*degen*np.exp(-1/T*e)
+
+E_mean = np.sum( [e*p for e,p in zip(eset,prob_set)] )
+
+E_data = np.round(E_data,5)  ## Rounding off errors induced by non-zero H. Not sure-fire but works for now
+
+bars = np.array([list(E_data).count(e) for e in eset])/len(E_data)
+E_avg = np.mean(E_data)
+E_svar = 2*l_e*np.var(E_data, ddof=1)/len(E_data)
+E_err = 1.96*np.sqrt(E_svar)
+
+Mag_avg = np.mean(Mag_data)
+Mag_svar = 2*l_m*np.var(Mag_data, ddof = 1)/len(Mag_data)
+Mag_err = 1.96*np.sqrt(Mag_svar)
+
+print("Computation time =", time()-t0)
+print("Energy list: ", eset)
+print("Mag. corr. length: ", l_m,", and E. corr. length: ",l_e)
+print("avg energy: E = {:.4f} +- {:.4f}".format(*[E_avg,E_err]))
+print("mean energy: E = {:.4f}".format(E_mean))
+print("avg magnetization: E[|m|] = {:.4f} +- {:.4f}".format(*[Mag_avg,Mag_err]))
+#print("mean magnetization: <E>={:.4f}".format(Mag_mean))
+
+fig, ax = plt.subplots(1,2 , figsize=(12, 5))
+ax[0].bar(eset, bars, width = .3, label="Monte Carlo")
+ax[0].scatter(eset,prob_set, color = "black", label = "Theory") 
+ax[0].legend()
+ax[0].set_xlabel("Energy",fontsize = 15) 
+ax[0].set_ylabel("prob(E)" ,fontsize = 15)
+ax[0].set_title(f"Energy dist. at (L,T,H)={(L,T,H)}", fontsize=18)
+
+ax[1].scatter([0],[E_avg], color="red", label=f"Monte Carlo") 
+ax[1].scatter([0],[E_mean], color="black", label=f"Theory") 
+ax[1].errorbar([0],[E_avg], yerr=E_err, linestyle="None", color='red')
+ax[1].legend()
+ax[1].set_ylabel("Energy" ,fontsize=15)
+ax[1].set_title(f"Mean energy at (L,T,H)={(L,T,H)}", fontsize=18)
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[2], line 7[0m
+[1;32m      4[0m N_burnin [38;5;241m=[39m [38;5;241m400[39m[38;5;241m*[39mN_sites
+[1;32m      5[0m N_iterations [38;5;241m=[39m [38;5;241m10[39m[38;5;241m*[39m[38;5;241m*[39m[38;5;241m5[39m[38;5;241m*[39mN_sites
+[0;32m----> 7[0m t0 [38;5;241m=[39m [43mtime[49m()
+[1;32m      8[0m trace [38;5;241m=[39m Metropolis_update(hotstart(L), beta, H, N_burnin [38;5;241m+[39m N_iterations)
+[1;32m      9[0m trace [38;5;241m=[39m trace[N_burnin:]
+
+[0;31mNameError[0m: name 'time' is not defined
+

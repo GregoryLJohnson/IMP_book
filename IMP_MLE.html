@@ -1,0 +1,1060 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Maximum Likelihood Estimation - estimating \(\beta\) and \(H\) &#8212; Ising Model Playground</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'IMP_MLE';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Phase Transitions: Principle Component Analysis and Machine Learning" href="IMP_PCA.html" />
+    <link rel="prev" title="Benchmarking against exact results" href="bench.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Ising Model Playground - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Ising Model Playground - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ising Model as a Playground
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exact.html">Exact Ising Model Computations for Small Lattices</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="MCMC.html">Monte Carlo Algorithms</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="bench.html">Benchmarking against exact results</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="IMP_PCA.html">Phase Transitions: Principle Component Analysis and Machine Learning</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/GregoryLJohnson/IMP_book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GregoryLJohnson/IMP_book/issues/new?title=Issue%20on%20page%20%2FIMP_MLE.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/IMP_MLE.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Maximum Likelihood Estimation - estimating \beta and H</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood">Maximum Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-mle-from-mcmc">Distribution of MLE from MCMC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#section-contents">Section contents:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-beta-from-random-samples-of-the-exact-distribution">MLE for <span class="math notranslate nohighlight">\(\beta\)</span> from random samples of the exact distribution:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-from-mcmc-data">MLE from MCMC data:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-mle-from-mcmc-data">Distribution of MLE from MCMC data:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-distribution-for-n-runs-100">MLE distribution for N_runs = 100</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-vs-n-runs">MLE vs. N_runs</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-estimation-estimating-beta-and-h">
+<h1>Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span><a class="headerlink" href="#maximum-likelihood-estimation-estimating-beta-and-h" title="Permalink to this heading">#</a></h1>
+<p><strong>Outline of topics:</strong></p>
+<ol class="arabic simple">
+<li><p>Distribution of MLE, scores and Fisher information, and Cramer-Rao bound</p></li>
+<li><p>Asymptotic distributions of MLEs</p></li>
+<li><p>Later on</p>
+<ul class="simple">
+<li><p>Bootstrapping error for MLEs (due to lack of known distributions)</p></li>
+<li><p>Wilks’ theorem - asymptotic distribution of MLE - and Wilks’ test</p></li>
+<li><p>Lagrange multiplier test (score test)</p></li>
+<li><p>Wald test</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sources:</strong></p>
+<ol class="arabic simple">
+<li><p>Casella and Burger</p></li>
+<li><p>See my notes</p></li>
+</ol>
+<p>Suppose we are given a sample of observations from a supposed Gibbsian distribution, say the 2D nearest neighbors Ising model. However, we do not know the underlying parameters of the distribution, particularly the combination <span class="math notranslate nohighlight">\(K=\displaystyle \frac{J}{k_\text{B} T}\)</span>. Two straight forward methods for determining <span class="math notranslate nohighlight">\(K\)</span> are that of maximum likelihood estimation and maximizing (differential) entropy.</p>
+<p><strong>Question:</strong> Are these two concepts actually related? See <a class="reference external" href="https://stats.stackexchange.com/questions/504117/is-there-a-relationship-between-maximum-likelihood-estimation-and-the-maximum-en">here</a>.</p>
+<section id="maximum-likelihood">
+<h2>Maximum Likelihood<a class="headerlink" href="#maximum-likelihood" title="Permalink to this heading">#</a></h2>
+<p>Suppose we don’t know <span class="math notranslate nohighlight">\(\beta\)</span>, but have a sample of independent energy measurements. We can then use a maximum likelihood estimator to infer <span class="math notranslate nohighlight">\(\beta\)</span>. We won’t try for a analytic result (there likely isn’t one), but use a spread of algorithms to compute <span class="math notranslate nohighlight">\(\beta\)</span> numerically as the maximum likelihood value.</p>
+<p>Thus, the probablity of measuring <span class="math notranslate nohighlight">\(E_k\)</span> is $<span class="math notranslate nohighlight">\(p(E_k)=\mathcal{Z}(\beta)^{-1}\sum_{E=E_k}\exp(-\beta E)=\mathcal{Z}^{-1}\Omega(E_k)\exp(-\beta E_k).\)</span><span class="math notranslate nohighlight">\(
+The above expression requires that we know the partition function and the energy degeneracy. We can compute these exactly for small \)</span>L<span class="math notranslate nohighlight">\(. We currently have implemented the computation via exact enumeration for \)</span>L \in {2,3,4}<span class="math notranslate nohighlight">\(. Remember that \)</span>L<span class="math notranslate nohighlight">\( is the linear size, and the number of configurations scales as \)</span>2^{L^2}<span class="math notranslate nohighlight">\(, so \)</span>N_\mathcal{C} \sim {16,512,65536}<span class="math notranslate nohighlight">\( for our range of \)</span>L$.</p>
+<p>In practice, we use the log-likelihood ln<span class="math notranslate nohighlight">\(\,p(E_k)\)</span> which yields the same extrema,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7a7c15d0-9342-4e90-838c-95268e2f0b88">
+<span class="eqno">(8)<a class="headerlink" href="#equation-7a7c15d0-9342-4e90-838c-95268e2f0b88" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\ln \,p(E_k) &amp;=&amp;-\ln \mathcal{Z}-\beta E_k+\ln \Omega(E_k) \\
+&amp;=&amp; -\ln \mathcal{Z}-\beta\left( E_k-T \,S(E_k) \right)
+\end{eqnarray}\]</div>
+<p>where we introduced the entropy as <span class="math notranslate nohighlight">\(\Omega(E_k)=\exp(S(E_k))\)</span>. One can use the first expression to obtain the likelihood of a sample <span class="math notranslate nohighlight">\(\{E_i\}_{i=1,..,n}\)</span> of energy observations.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e35a8f86-d5fe-4860-9b16-60ad41b640fa">
+<span class="eqno">(9)<a class="headerlink" href="#equation-e35a8f86-d5fe-4860-9b16-60ad41b640fa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\ln \,p(\{E_i\}) &amp;=&amp;-n*\ln \mathcal{Z}+ \sum_{i=1}^n \left(-\beta\,E_i+\ln \Omega(E_i)\right) \\
+&amp;=&amp;-n*\ln \mathcal{Z}+ \sum_{k=1} \text{Count}(\{E_i\},E_k) \left(-\beta\,E_k+\ln \Omega(E_k)\right)
+\end{eqnarray}\]</div>
+<p>where the second sum is over the python set “set<span class="math notranslate nohighlight">\(\left(\{E_i\}\right)\)</span>” with elements labelled by <span class="math notranslate nohighlight">\(k\)</span>, and Count<span class="math notranslate nohighlight">\((A,a)\)</span> counts the occurences of a in A.</p>
+</section>
+<section id="distribution-of-mle-from-mcmc">
+<h2>Distribution of MLE from MCMC<a class="headerlink" href="#distribution-of-mle-from-mcmc" title="Permalink to this heading">#</a></h2>
+<p>The maximum likelihood estimator (MLE) <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> of a quantity <span class="math notranslate nohighlight">\(\theta\)</span> is itself a random variable. One can show that the MLE is asymptotically normally distributed. In this situation, one can put confidence intervals on the MLE estimate as usual using the sample variance and the t-distribution.</p>
+<p>If the experiment is computationally expensive such that multiple runs is not feasible, how then how can one estimate the error in the estimator <span class="math notranslate nohighlight">\(\hat{\theta}\)</span>? One approach is to bootstrap the error.</p>
+<p>For large sample sizes, one can show that the MLE is asymtotically normal. For
+<span class="math notranslate nohighlight">\(n\)</span> iid observations <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is distrbuted
+$<span class="math notranslate nohighlight">\(\sqrt{n}\left(\hat{\theta}-\theta_0\right) \sim \mathcal{N}(0, \mathcal{I}_{\theta_0}^{-1})\)</span><span class="math notranslate nohighlight">\(
+    \)</span><span class="math notranslate nohighlight">\( \text{Var}(\hat{\theta}) \approx \left( n \mathcal{I}_{\theta_0}\right)^{-1}\)</span><span class="math notranslate nohighlight">\(
+This gives the standard \)</span>95<span class="math notranslate nohighlight">\(% confidence interval
+\)</span><span class="math notranslate nohighlight">\(\theta_0 \in \hat{\theta} \pm 1.96 \sqrt{\frac{1}{n\,I_0}}\)</span><span class="math notranslate nohighlight">\(
+In general, one has the Cramer-Rao bound which states the variance of any MLE is bounded from below by the reciprocal of the Fisher information. Given the relation \)</span>I_n=n,I_0<span class="math notranslate nohighlight">\( for \)</span>n<span class="math notranslate nohighlight">\( iid observations and the fact that \)</span>I_0$ doesn’t depend on the sample, we see that the Fisher information sets the precision to which we can determine the MLE.</p>
+<p>Repeating the Monte Carlo alogrithm with fixed parameters produces the distrubtion of averages values of <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(E\)</span>. In addition, it also produces the distribution of the MLE, since the MLE is itself a random variable - the MLE is a function of a random sample. So too are the scores. For the Gibbs distribution of the Ising model, we have the following expression for the scores and Fisher information corresponding to a sample <span class="math notranslate nohighlight">\(X\)</span> generated via Monte Carlo</p>
+<div class="amsmath math notranslate nohighlight" id="equation-91615a07-6217-48b3-888f-633253a38ed6">
+<span class="eqno">(10)<a class="headerlink" href="#equation-91615a07-6217-48b3-888f-633253a38ed6" title="Permalink to this equation">#</a></span>\[\begin{align}
+s(X|\beta) &amp;= \langle E \rangle - \bar{E}_X  \\
+\text{Var}(s(X|\beta)) &amp;= n\,I_0 \\
+I_0 &amp;= \langle E^2 \rangle - \langle E \rangle^2 
+\end{align}\]</div>
+<p>Since the Fisher information is given by the specfic heat, which diverges near <span class="math notranslate nohighlight">\(T=T_c\)</span>, we see that MLE is more precise (lower variance) near the phase transition.</p>
+<p><strong>How to perform MLE for larger <span class="math notranslate nohighlight">\(N\)</span> with arbitrary <span class="math notranslate nohighlight">\(K=\beta J\)</span> and <span class="math notranslate nohighlight">\(h=\beta H\)</span>:</strong></p>
+<ol class="arabic simple">
+<li><p>Devise a method which doesn’t require knowledge of <span class="math notranslate nohighlight">\(\mathcal{Z}\)</span> or <span class="math notranslate nohighlight">\(\Omega\)</span>.</p></li>
+<li><p>Measuring E and M and doing some joint distribution thing and incorporating knowledge and/or estimates of Var<span class="math notranslate nohighlight">\((E)\)</span> or Var<span class="math notranslate nohighlight">\((M)\)</span>.</p></li>
+<li><p>Use the exact results for the energy distribution as given in <a class="reference external" href="https://link.aps.org/doi/10.1103/PhysRevLett.76.78">this article</a> by Beale.</p></li>
+<li><p>Other methods - see articles <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.108.090201">1</a> and <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S1875389214002855">2</a>.</p></li>
+</ol>
+</section>
+<section id="section-contents">
+<h2>Section contents:<a class="headerlink" href="#section-contents" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>MLE for <span class="math notranslate nohighlight">\(\beta\)</span> from random samples of the exact distribution:</p>
+<ul class="simple">
+<li><p>Here we plot the log-likelihood <span class="math notranslate nohighlight">\(\ell(X|\beta)-\ell(X|\beta=\beta_0)\)</span> of samples <span class="math notranslate nohighlight">\(X\)</span> of various size normalized by <span class="math notranslate nohighlight">\(\ell(X|\beta=\beta_0)\)</span> so as to compare the plots.</p></li>
+<li><p>Sample size produces a larger curvature in the log-likelihood, thus increasing the precision of the MLE.</p></li>
+</ul>
+</li>
+<li><p>MLE from MCMC data:</p>
+<ul class="simple">
+<li><p>Here we do a single MCMC run to compute the log-likelihood using the exact distribution.</p></li>
+<li><p>The max of <span class="math notranslate nohighlight">\(\ell(X|\beta)\)</span> corresponds to our MLE estimate for <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+<li><p>We compute via a minimization procedure of <span class="math notranslate nohighlight">\(-\ell(X|\beta)\)</span> and a root finder on the <span class="math notranslate nohighlight">\(\beta\)</span>-derivative of <span class="math notranslate nohighlight">\(\ell(X|\beta)\)</span>, i.e. the score.</p></li>
+</ul>
+</li>
+<li><p>Distribution of MLE from MCMC data:</p>
+<ol class="arabic simple">
+<li><p>Produce the distribtuion of the MLE, <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>, obtained from <span class="math notranslate nohighlight">\(N_runs=100\)</span> different MCMC runs.</p></li>
+<li><p>Compare MLE distributions for increasing numbers of runs to see the asymptotic normal distribution. We aim to reproduce:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \text{Var}(\hat{\theta}) \approx \left( n \mathcal{I}_{\theta_0}\right)^{-1}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{Var}(s(X|\beta)) = n\,I_0 \)</span>.</p></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Multivariate MLE for <span class="math notranslate nohighlight">\(K=\beta J\)</span> and <span class="math notranslate nohighlight">\(h=\beta H\)</span> without knowledge of exact distribution:</p>
+<ul class="simple">
+<li><p>To be performed later.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span><span class="o">,</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span><span class="o">,</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">packages.Ising_functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">packages.MCMC_functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span><span class="o">,</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span><span class="o">,</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">packages.Ising_functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">packages.MCMC_functions</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="mle-for-beta-from-random-samples-of-the-exact-distribution">
+<h1>MLE for <span class="math notranslate nohighlight">\(\beta\)</span> from random samples of the exact distribution:<a class="headerlink" href="#mle-for-beta-from-random-samples-of-the-exact-distribution" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+
+<span class="n">energy_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">))))</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">energy_list</span><span class="p">]</span>
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">)])</span>
+
+<span class="n">N_samples</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">E_samplemean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">N_samples</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">prob_set</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">E_mean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">E_samplemean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-10.393972199869003
+-10.432
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Samplesize_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">160</span><span class="p">]</span>
+<span class="n">randon_energy_set</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">prob_set</span><span class="p">))</span> <span class="k">for</span> <span class="n">ns</span> <span class="ow">in</span> <span class="n">Samplesize_range</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">re</span> <span class="ow">in</span> <span class="n">randon_energy_set</span><span class="p">:</span>
+    <span class="n">log_prob_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">re</span><span class="p">)</span><span class="o">-</span> <span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">re</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperature_range</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">,</span> <span class="n">log_prob_data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Ns=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="p">)</span><span class="si">}</span><span class="s2">,&quot;</span><span class="o">+</span><span class="sa">r</span><span class="s2">&quot;$E_{{{\text</span><span class="si">{avg}</span><span class="s2">}}}=$&quot;</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">re</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized Log-likelihood&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$E_{{{\text</span><span class="si">{avg}</span><span class="s2">}}}=$&quot;</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">E_mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/53605ec72bb37f56c8eeb6cb5e27ab6c83d6520ca5db71c3b3f5c8653860c55d.png" src="_images/53605ec72bb37f56c8eeb6cb5e27ab6c83d6520ca5db71c3b3f5c8653860c55d.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="mle-from-mcmc-data">
+<h1>MLE from MCMC data:<a class="headerlink" href="#mle-from-mcmc-data" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">N_runs</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="c1"># traces = []</span>
+<span class="n">log_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">E_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_runs</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+
+    <span class="n">Mag_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span>
+    <span class="c1">#l_m = exp_corr_len(auto_corr(Mag_data))/N_sites</span>
+
+    <span class="n">E_data</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1">#l_e = exp_corr_len(auto_corr(E_data))/N_sites</span>
+
+    <span class="n">t_steps</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">temperature_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">t_steps</span><span class="p">)</span>
+    <span class="n">E_samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span>
+    <span class="n">E_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+    <span class="n">log_prob_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">E_samples</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperature_range</span><span class="p">]</span>
+    <span class="n">log_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_prob_data</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computation time =&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computation time = 1.3984472751617432
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_runs</span><span class="p">):</span>
+    <span class="n">log_prob_data</span> <span class="o">=</span> <span class="n">log_trace</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">T_range</span><span class="p">,</span> <span class="n">log_prob_data</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span> <span class="s2">&quot;Log-likelihood&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize_scalar</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root_scalar</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
+<span class="n">E_samples</span> <span class="o">=</span> <span class="n">E_trace</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1">## MLE as minimization on log likelihood</span>
+<span class="k">def</span> <span class="nf">min_f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">E_samples</span><span class="p">)</span> 
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">minimize_scalar</span><span class="p">(</span><span class="n">min_f</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;bounded&#39;</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximimum likelihood estimate of the temperatre: T = </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computaiton time using scipy&#39;s scalar minimization =&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span>
+
+<span class="c1">## MLE as a root of the deriviative of log likelihood - the score</span>
+<span class="k">def</span> <span class="nf">root_f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">energy_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">))))</span>
+    <span class="n">prob_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">energy_list</span><span class="p">]</span>
+    <span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">e</span><span class="o">*</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">energy_list</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">E_mean</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span><span class="n">root_f</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximimum likelihood estimate of the temperatre: T = </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computaiton time using scipy&#39;s scalar root finder =&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5bf8f9f7e618351c1203341d479100a9bc8f6d6e1ce4d1d26290f6fc36ba4c33.png" src="_images/5bf8f9f7e618351c1203341d479100a9bc8f6d6e1ce4d1d26290f6fc36ba4c33.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Maximimum likelihood estimate of the temperatre: T = 2.9737601207487465
+Computaiton time using scipy&#39;s scalar minimization = 0.08695249557495117  seconds
+Maximimum likelihood estimate of the temperatre: T = 2.973760038549493
+Computaiton time using scipy&#39;s scalar root finder = 0.15513358116149903  seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="distribution-of-mle-from-mcmc-data">
+<h1>Distribution of MLE from MCMC data:<a class="headerlink" href="#distribution-of-mle-from-mcmc-data" title="Permalink to this heading">#</a></h1>
+<section id="mle-distribution-for-n-runs-100">
+<h2>MLE distribution for N_runs = 100<a class="headerlink" href="#mle-distribution-for-n-runs-100" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+
+<span class="n">energy_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">))))</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">energy_list</span><span class="p">]</span>
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">)])</span>
+<span class="n">E_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([(</span><span class="n">e</span><span class="o">-</span><span class="n">E_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">N_runs</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="c1"># traces = []</span>
+<span class="n">log_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">E_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">MLE_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_runs</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+
+    <span class="n">Mag_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span>
+    <span class="c1">#l_m = exp_corr_len(auto_corr(Mag_data))/N_sites</span>
+
+    <span class="n">E_data</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1">#l_e = exp_corr_len(auto_corr(E_data))/N_sites</span>
+
+    <span class="n">E_samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span>
+    <span class="n">E_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">min_f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">E_samples</span><span class="p">)</span> 
+    
+    <span class="n">res</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">min_f</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;bounded&#39;</span><span class="p">)</span>
+    <span class="n">MLE_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computation time for N_runs = </span><span class="si">{</span><span class="n">N_runs</span><span class="si">}</span><span class="s2">: &quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">,</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computation time for N_runs = 100:  72.84732484817505  seconds
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">E_svar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ddof</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">E_trace</span><span class="p">])</span>
+<span class="c1">#E_svar = np.var(E_trace[-1], ddof = 1)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Population variance = &quot;</span><span class="p">,</span> <span class="n">E_var</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Sample variance = &quot;</span><span class="p">,</span> <span class="n">E_svar</span><span class="p">)</span>
+
+<span class="n">E_score</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="n">E_mean</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">E_trace</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;MLE&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\overline{\text</span><span class="si">{MLE}</span><span class="s2">}=$&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">E_score</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Scores=$\left( \langle E \rangle -\bar{{</span><span class="si">{E}</span><span class="s2">}}\right)_{\beta}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">E_samples</span> <span class="o">=</span> <span class="n">E_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">l_e</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">E_samples</span><span class="p">))</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l_e = &quot;</span><span class="p">,</span> <span class="n">l_e</span><span class="p">)</span>
+
+<span class="n">Effect_sample_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">l_e</span><span class="p">)</span>
+<span class="n">In</span> <span class="o">=</span> <span class="n">Effect_sample_size</span><span class="o">*</span><span class="n">E_var</span>
+<span class="n">Var_th</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">In</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE variance versus Fisher information: </span><span class="se">\n</span><span class="s2"> percent difference&quot;</span><span class="p">,</span> 
+      <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">)</span><span class="o">-</span><span class="n">Var_th</span><span class="p">)</span><span class="o">/</span><span class="n">Var_th</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Score variance versus Fisher information: </span><span class="se">\n</span><span class="s2"> percent difference&quot;</span><span class="p">,</span> 
+      <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_score</span><span class="p">)</span><span class="o">-</span><span class="n">E_var</span><span class="o">/</span><span class="n">Effect_sample_size</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">E_var</span><span class="o">/</span><span class="n">Effect_sample_size</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Population variance =  44.79732026412449 
+ Sample variance =  44.838136193197215
+</pre></div>
+</div>
+<img alt="_images/600c691ecd052c296854f7c9f6541c05b59c5eff23d712e521d07c2fa095f0ec.png" src="_images/600c691ecd052c296854f7c9f6541c05b59c5eff23d712e521d07c2fa095f0ec.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>l_e =  15
+MLE variance versus Fisher information: 
+ percent difference 14.025891890169174
+Score variance versus Fisher information: 
+ percent difference 14.102903856718113
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mle-vs-n-runs">
+<h2>MLE vs. N_runs<a class="headerlink" href="#mle-vs-n-runs" title="Permalink to this heading">#</a></h2>
+<p>For a large enough number of runs, the sample variance in the MLE should be equal to the Fisher information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">N_runs_set</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">1260</span><span class="p">]</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">MLE_stats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">E_trace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">N_runs_set</span><span class="p">:</span>
+    <span class="n">N_runs</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="n">MLE_trace</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_runs</span><span class="p">):</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+
+        <span class="n">E_samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">E_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+        
+        <span class="k">def</span> <span class="nf">min_f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">log_prob_Eset</span><span class="p">(</span><span class="n">L</span> <span class="p">,</span><span class="n">t</span> <span class="p">,</span><span class="n">H</span> <span class="p">,</span><span class="n">E_samples</span><span class="p">)</span> 
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">min_f</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;bounded&#39;</span><span class="p">)</span>
+        <span class="n">MLE_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        
+    <span class="n">MLE_stats</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">N_runs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total computation time for N_runs in </span><span class="si">{</span><span class="n">N_runs_set</span><span class="si">}</span><span class="s2">: &quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">,</span> <span class="s2">&quot; seconds.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total computation time for N_runs in [10, 20, 40, 80, 160, 320, 640, 1260]:  1861.3682188987732  seconds.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MLE_stats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">)</span>
+
+<span class="n">energy_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">))))</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">energy_list</span><span class="p">]</span>
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">)])</span>
+<span class="n">E_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([(</span><span class="n">e</span><span class="o">-</span><span class="n">E_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energy_list</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">)])</span>
+
+<span class="c1"># Compute the energy variance from the very last MCMC run</span>
+<span class="n">E_samples</span> <span class="o">=</span> <span class="n">E_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">E_svar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+
+<span class="c1"># Compute scores and from last set of runs</span>
+<span class="n">E_score</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="n">E_mean</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">E_trace</span><span class="p">[</span><span class="o">-</span><span class="n">N_runs_set</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:]]</span>
+
+<span class="n">l_e</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">E_samples</span><span class="p">))</span>
+
+<span class="n">Effect_sample_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">l_e</span><span class="p">)</span>
+<span class="n">In</span> <span class="o">=</span> <span class="n">Effect_sample_size</span><span class="o">*</span><span class="n">E_var</span>
+<span class="n">Var_th</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">In</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;energy exponential correlation length =&quot;</span><span class="p">,</span> <span class="n">l_e</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pop variance = </span><span class="si">{</span><span class="n">E_var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Samp variance = </span><span class="si">{</span><span class="n">E_svar</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>  
+      <span class="sa">f</span><span class="s2">&quot; and N_effective*Var(score) = </span><span class="si">{</span><span class="n">Effect_sample_size</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_score</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE variance versus Fisher information: </span><span class="se">\n</span><span class="s2"> percent difference:&quot;</span><span class="p">,</span> 
+      <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">MLE_trace</span><span class="p">)</span><span class="o">-</span><span class="n">Var_th</span><span class="p">)</span><span class="o">/</span><span class="n">Var_th</span> <span class="o">*</span> <span class="mi">100</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Score variance versus Fisher information: </span><span class="se">\n</span><span class="s2"> percent difference:&quot;</span><span class="p">,</span> 
+      <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_score</span><span class="p">)</span><span class="o">-</span><span class="n">E_var</span><span class="o">/</span><span class="n">Effect_sample_size</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">E_var</span><span class="o">/</span><span class="n">Effect_sample_size</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span> <span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;MCMC MLE variance over runs&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">Var_th</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$I_n^{-1}$&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log N_runs&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Var($\hat{\beta}$)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;MCMC MLE mean over runs&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">MLE_stats</span><span class="p">)),</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$\beta_0$&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log N_runs&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\bar{\hat{\beta}}$&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Convergence of MLE $\hat{\beta}$ to its asymptotoic distribution&quot;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>energy exponential correlation length = 15
+
+Pop variance = 44.79732026412449 
+ Samp variance = 44.41234140444445  
+  and N_effective*Var(score) = 45.21016000603194
+
+MLE variance versus Fisher information: 
+ percent difference: 0.9656556698038008
+Score variance versus Fisher information: 
+ percent difference: 0.9215724053879868
+</pre></div>
+</div>
+<img alt="_images/a9de0254909afcec81a23013f32fed1f29d8df2654854734951ffe10d3369a2b.png" src="_images/a9de0254909afcec81a23013f32fed1f29d8df2654854734951ffe10d3369a2b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ratio of MLE varaince to theorectical variance for each set of MCMC runs</span>
+<span class="n">MLE_stats</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">Var_th</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.67422868, 0.94579779, 0.91917852, 0.9133107 , 1.08669428,
+       0.93621973, 0.8568855 , 1.01045851])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="bench.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Benchmarking against exact results</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="IMP_PCA.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Phase Transitions: Principle Component Analysis and Machine Learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood">Maximum Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-mle-from-mcmc">Distribution of MLE from MCMC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#section-contents">Section contents:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-beta-from-random-samples-of-the-exact-distribution">MLE for <span class="math notranslate nohighlight">\(\beta\)</span> from random samples of the exact distribution:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-from-mcmc-data">MLE from MCMC data:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-of-mle-from-mcmc-data">Distribution of MLE from MCMC data:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-distribution-for-n-runs-100">MLE distribution for N_runs = 100</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-vs-n-runs">MLE vs. N_runs</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregory Johnson
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

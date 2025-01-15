@@ -1,0 +1,58 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbbook/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import matplotlib.pylab as plt
+
+## compute histrogram and exact probablities
+#elist = list(sorted(set([ Ham(M,J_NN,H) for M in config_gen(N)])))
+L, T, H = 4, 10, 0
+beta = 1/T
+N_sites = L**2
+
+elist = [Ham(M,H) for M in config_gen(L)]
+eset = sorted(set(elist))
+degeneracies = np.array([ (e, elist.count(e)) for e in eset])
+
+partition_function = np.sum([np.exp(-1/T*e) for e in elist ])
+prob_set = np.zeros_like(eset)
+for i,e in enumerate(eset):
+    j = np.where(degeneracies[:,0] == e)[0][0]
+    degen = degeneracies[j][1]
+    prob_set[i] = partition_function**(-1)*degen*np.exp(-1/T*e)
+
+E_mean = np.sum( [e*p for e,p in zip(eset,prob_set)] )
+
+print("Energy list: ", eset)
+fig, ax = plt.subplots(1,1)
+ax.scatter(eset, prob_set, color = "black", label = "Theory") 
+ax.set_xlabel("Energy",fontsize = 15) 
+ax.set_ylabel("prob(E)" ,fontsize = 15)
+plt.title(f"Energy distribution at (L,T,H)={(L,T,H)}",fontsize=18)
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[7], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpylab[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;32m      3[0m [38;5;66;03m## compute histrogram and exact probablities[39;00m
+[1;32m      4[0m [38;5;66;03m#elist = list(sorted(set([ Ham(M,J_NN,H) for M in config_gen(N)])))[39;00m
+[1;32m      5[0m L, T, H [38;5;241m=[39m [38;5;241m4[39m, [38;5;241m10[39m, [38;5;241m0[39m
+
+[0;31mModuleNotFoundError[0m: No module named 'matplotlib'
+

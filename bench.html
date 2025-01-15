@@ -1,0 +1,1219 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Benchmarking against exact results &#8212; Ising Model Playground</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'bench';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Maximum Likelihood Estimation - estimating \(\beta\) and \(H\)" href="IMP_MLE.html" />
+    <link rel="prev" title="Monte Carlo Algorithms" href="MCMC.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Ising Model Playground - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Ising Model Playground - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ising Model as a Playground
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exact.html">Exact Ising Model Computations for Small Lattices</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="MCMC.html">Monte Carlo Algorithms</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmarking against exact results</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="IMP_MLE.html">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="IMP_PCA.html">Phase Transitions: Principle Component Analysis and Machine Learning</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/GregoryLJohnson/IMP_book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GregoryLJohnson/IMP_book/issues/new?title=Issue%20on%20page%20%2Fbench.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/bench.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Benchmarking against exact results</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Benchmarking against exact results</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effective-sample-size-and-error-of-observable-averages">Effective sample size and error of observable averages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-autocorrelations">Effect of autocorrelations:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#errors-of-non-linear-functions-of-random-variables">Errors of non-linear functions of random variables:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-autocorrelation-time">Computing autocorrelation time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelation-functions">Autocorrelation functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#n-4-energy-histrograms-correlation-length-at-t-3-h-1">N=4 energy histrograms, correlation length at <span class="math notranslate nohighlight">\(T=3,H=1\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelations-for-the-metropolis-hastings-algorithm">Autocorrelations for the Metropolis-Hastings algorithm:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-metropolis-hastings-wolff-and-heatbath">Comparing Metropolis-Hastings, Wolff, and Heatbath:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-length-and-temperature">Correlation length and temperature</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="benchmarking-against-exact-results">
+<h1>Benchmarking against exact results<a class="headerlink" href="#benchmarking-against-exact-results" title="Permalink to this heading">#</a></h1>
+<p>By generating the set of spin configurations for a given N and computing their energies and degeneracies, one can construct the exact partition function <span class="math notranslate nohighlight">\(\mathcal{Z}_N(\beta)\)</span>. From this function, one can recover all the physics we are interested in. We only attempt to do so for small <span class="math notranslate nohighlight">\(N\)</span>, specficially <span class="math notranslate nohighlight">\(N \in \{2,3,4\}\)</span>. Simple things to compare are the energy space Monte Carlo histrograms with the exact probabiltiy distribution given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d65f6c86-e04e-4ad8-847c-4e7229ff1b95">
+<span class="eqno">(3)<a class="headerlink" href="#equation-d65f6c86-e04e-4ad8-847c-4e7229ff1b95" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+p(E_k)=\mathcal{Z}^{-1}\,\Omega(E_k)\,\exp(-\beta E_k)
+\end{eqnarray}\]</div>
+<p>Other simple measurements are the average energy and magnetziation vs temperature.</p>
+<section id="effective-sample-size-and-error-of-observable-averages">
+<h2>Effective sample size and error of observable averages<a class="headerlink" href="#effective-sample-size-and-error-of-observable-averages" title="Permalink to this heading">#</a></h2>
+<p>Given the central limit theorem, <span class="math notranslate nohighlight">\(\bar{X}_n \sim \mathcal{N}(\mu,\frac{\sigma^2}{n})\)</span>, Monte Carlo averages are eexpected to be normalliy distrubted. We can then put bounds on the results of our Monte Carlo averages using <span class="math notranslate nohighlight">\(95\%\)</span> confidence intervals: <span class="math notranslate nohighlight">\(\displaystyle \bar{X} \pm 1.96 \frac{\sigma}{\sqrt{n}}\)</span>. But, this only holds for a set of <span class="math notranslate nohighlight">\(n\)</span> uncorrelated observations. For correlated observations, we take <span class="math notranslate nohighlight">\(n \to n_{\text{eff}}\)</span> where the autocorrelation length reduces the effective sample size.</p>
+<p>To account for the correlations, one can either determine how to compute <span class="math notranslate nohighlight">\(n_{\text{eff}}\)</span> or, do two MC runs - the first determines <span class="math notranslate nohighlight">\(\tau\)</span>, while the second takes sweeps large enough to encompass <span class="math notranslate nohighlight">\(\tau\)</span> and produce uncorrelated observations (which can be checked by checking that <span class="math notranslate nohighlight">\(\tau \approx 1\)</span> ).</p>
+<p>But, we don’t know <span class="math notranslate nohighlight">\(\sigma^2\)</span>. So, we estimate the variance using the sample variance (of <span class="math notranslate nohighlight">\(n-1\)</span> degrees of freedom ) - <span class="math notranslate nohighlight">\(\sigma^2 \to s^2=\frac{1}{n-1}\sum_i \left( X_i-\bar{X} \right)^2\)</span>. Our new confidence intervals become
+$<span class="math notranslate nohighlight">\(\bar{X} \pm t_{\alpha/2} \, \frac{s}{\sqrt{n}}\)</span><span class="math notranslate nohighlight">\( 
+where \)</span>\alpha=0.05<span class="math notranslate nohighlight">\( and \)</span>t_{\alpha/2}<span class="math notranslate nohighlight">\( is defined such that Prob\)</span>(t &lt; t_{\alpha/2})=\alpha/2<span class="math notranslate nohighlight">\( via the \)</span>t_{\nu=n-1}<span class="math notranslate nohighlight">\(-distribution. Note that for very large sample sizes, \)</span>n&gt;&gt;1<span class="math notranslate nohighlight">\(, we have \)</span>t_{\alpha/2}\approx 1.96<span class="math notranslate nohighlight">\( for \)</span>\alpha=.05<span class="math notranslate nohighlight">\(. This will be the case for our Monte Carlo results, yielding
+\)</span><span class="math notranslate nohighlight">\(\bar{X} \pm 1.96 \, \frac{s}{\sqrt{n}}\)</span>$</p>
+<section id="effect-of-autocorrelations">
+<h3>Effect of autocorrelations:<a class="headerlink" href="#effect-of-autocorrelations" title="Permalink to this heading">#</a></h3>
+<p>The presence of autocorrelations within a sample adds a multiplicative factor to the variance of the sample mean, Var<span class="math notranslate nohighlight">\((\bar{X}) \approx 2*\tau_{\text{exp}}\frac{s^2}{n}\)</span>. Yielding the interval
+$<span class="math notranslate nohighlight">\(\bar{X} \pm 1.96 * \sqrt{\frac{2\tau_{\text{exp}}\,s^2}{n}}\)</span><span class="math notranslate nohighlight">\( 
+Since measurements are a computational expense and somewhat inefficient in the presence of autocorrelations, one can instead measure every handful of sweeps \)</span>n<span class="math notranslate nohighlight">\( such that \)</span>n \le \tau$. The error associated with measurements from the two sets should be roughly equivalent - a trade off between sample size and correlation length.</p>
+</section>
+</section>
+<section id="errors-of-non-linear-functions-of-random-variables">
+<h2>Errors of non-linear functions of random variables:<a class="headerlink" href="#errors-of-non-linear-functions-of-random-variables" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Batching, Jackknife, Bootstrap</p></li>
+</ol>
+</section>
+<section id="computing-autocorrelation-time">
+<h2>Computing autocorrelation time<a class="headerlink" href="#computing-autocorrelation-time" title="Permalink to this heading">#</a></h2>
+<p>Some things need to be said about autocorrelation. Due to the procedure for configuration generation, the configurations are not statistically independent. The degree to which nearby configurations are correlated is measured by the correlation time. Two measures we explore are integrated and (more loosely) the exponential corrrelation times. Furthermore, the correlation time depends on system parameters. Near the Ising critical point, we expect <span class="math notranslate nohighlight">\(\tau\)</span> to diverge for single-spin flip updates. Additionally, given the single spin nature of the Metropolis-Hastings algorithm, the number of steps required to generate an uncorrelated configuration should scale as a function of <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p>A common definition of the population and sample autocovariance is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-989dd67c-443b-4ef2-a0ab-ecb398fd5658">
+<span class="eqno">(4)<a class="headerlink" href="#equation-989dd67c-443b-4ef2-a0ab-ecb398fd5658" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+C(\tau)&amp;=&amp;\text{Cov}(X_t,X_{t+\tau}) \\
+\hat{C}(\tau)&amp;=&amp;\frac{1}{(n-\tau)}\sum_{i=1}^{n-t}\left(X_i-\bar{X}\right)\left(X_{i+\tau}-\bar{X}\right)
+\end{eqnarray}\]</div>
+<p>We then use the normalized autocorrelation functions by using the fact that <span class="math notranslate nohighlight">\(C(0)=\sigma^2\)</span> and similarly for the estimator <span class="math notranslate nohighlight">\(\hat{C}\)</span>. We define</p>
+<div class="amsmath math notranslate nohighlight" id="equation-546186d4-a62f-49d0-9b29-cf62b9ce8f1d">
+<span class="eqno">(5)<a class="headerlink" href="#equation-546186d4-a62f-49d0-9b29-cf62b9ce8f1d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\rho(t)&amp;=&amp;\frac{C(t)}{C(0)}=\frac{C(t)}{\sigma^2} \\
+\hat{\rho}(t)&amp;=&amp;\frac{\hat{C}(t)}{s^2}
+\end{eqnarray}\]</div>
+<p>where <span class="math notranslate nohighlight">\(s^2 \sim \frac{1}{n}\)</span>. We use two measures of the autocorrelation time:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7d6f3a40-8882-475d-8170-b25e5b9beae9">
+<span class="eqno">(6)<a class="headerlink" href="#equation-7d6f3a40-8882-475d-8170-b25e5b9beae9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+%%\tau_{int} &amp;=&amp; \frac{1}{t}\int_0^{\infty} \rho(t) \, dt \\
+\tau_{int} &amp;=&amp; 1 +2 \sum_{n=0}^{\infty} \rho(t_n) \\
+\tau_{\text{exp}} &amp;=&amp; -\text{inf}_t\{ t : \rho(t)&lt;e^{-1} \}
+\end{eqnarray}\]</div>
+<p>For the exponential correlation time, we equivalently expect the form <span class="math notranslate nohighlight">\( \displaystyle \rho(t) \sim e^{-t/\tau}\)</span>. Notice that we can define <span class="math notranslate nohighlight">\(\tau_{\text{int}}(t)\)</span> by simply replacing integral upper limit with <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>A important point to make is that the correlation time does depend on the function of which we are taking expectations. However, theorectically they should all be related. We will look at the magnetization and the energy correlation times.</p>
+<p>The following formulas are useful:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2b787a1f-9d48-433d-8e30-cbad1cb6785c">
+<span class="eqno">(7)<a class="headerlink" href="#equation-2b787a1f-9d48-433d-8e30-cbad1cb6785c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\text{Var}\left( \bar{X}_n \right)&amp;=&amp;\frac{1}{n}\text{Var}(X)\left(1+\frac{2}{n}\sum_{i=1}^n\sum_{j&gt;i }\frac{\text{Cov}(X_i,X_j)}{\text{Var}(X)} \right) \\
+&amp;=&amp;\frac{1}{n}\text{Var}(X)\left(1+\frac{2}{n}\sum_{i=1}^n\sum_{j&gt;i }\, \rho(X_i,X_j) \right) \\
+&amp;=&amp;\frac{1}{n}\text{Var}(X)\left(1+2\sum_{t=1}^{n-1}\frac{n-t}{n} \rho(t) \right)
+\end{eqnarray}\]</div>
+<p>In the case of independent identically distributed variables, <span class="math notranslate nohighlight">\(\rho(t)=0\)</span> and we recover the usual Var<span class="math notranslate nohighlight">\(\displaystyle (\bar{X})=\frac{\sigma^2}{n}\)</span>. The effect of autocorrelation reduces the <em>effective sample size</em> - <span class="math notranslate nohighlight">\(n_{\text{eff}}=\frac{n}{\alpha}\)</span> where <span class="math notranslate nohighlight">\(\alpha=\left(1+2\sum_{t=1}^{n-1}\frac{n-t}{n} \rho(t) \right)\)</span>.</p>
+<p>Ultimately, the correlation time measures the efficiency of an algorithm. We expect to see that the Wolff algortihm has a much smaller correlation time.</p>
+</section>
+<section id="autocorrelation-functions">
+<h2>Autocorrelation functions<a class="headerlink" href="#autocorrelation-functions" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy</span>
+
+<span class="k">def</span> <span class="nf">auto_corr</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="c1">## scipy signal.correlate is signifcantly faster than </span>
+    <span class="c1">#                 numpy&#39;s correlate which is significantly faster than hand-made code</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">avg</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    <span class="c1">#acov = np.correlate(x,x,&quot;full&quot;)[l-1:]</span>
+    <span class="n">auto_covariance</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="s2">&quot;full&quot;</span><span class="p">)[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">auto_covariance</span><span class="o">/</span><span class="p">(</span><span class="n">l</span><span class="o">*</span><span class="n">var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">exp_corr_len</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">comp</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="p">[</span><span class="n">comp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">partition</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  
+
+
+<span class="k">def</span> <span class="nf">int_corr_time_set</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t_lag</span><span class="p">):</span> 
+    <span class="c1">## Integrated corr time. Since auto_corrs are computed all at once, </span>
+    <span class="c1">##   compute correlations time all at once</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">avg</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    <span class="n">auto_covariance</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="p">]</span>
+    <span class="c1">#auto_covariance = np.correlate(x, x, &quot;full&quot;)[l-1: ]</span>
+    <span class="n">auto_correlation</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">auto_covariance</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">l</span><span class="o">*</span><span class="n">var</span><span class="p">)</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t_lag</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">auto_correlation</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="n-4-energy-histrograms-correlation-length-at-t-3-h-1">
+<h2>N=4 energy histrograms, correlation length at <span class="math notranslate nohighlight">\(T=3,H=1\)</span><a class="headerlink" href="#n-4-energy-histrograms-correlation-length-at-t-3-h-1" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">400</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+
+<span class="n">Mag_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">l_m</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">))</span><span class="o">/</span><span class="n">N_sites</span>
+
+<span class="n">E_data</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">l_e</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">E_data</span><span class="p">))</span><span class="o">/</span><span class="n">N_sites</span>
+
+<span class="c1">## compute histrogram and exact probablities</span>
+<span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+<span class="n">eset</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">elist</span><span class="p">))</span>
+<span class="n">degeneracies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">elist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">])</span>
+
+<span class="n">partition_function</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elist</span> <span class="p">])</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">eset</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eset</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degeneracies</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">degen</span> <span class="o">=</span> <span class="n">degeneracies</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">prob_set</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">partition_function</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">degen</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span><span class="n">prob_set</span><span class="p">)]</span> <span class="p">)</span>
+
+<span class="n">E_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">E_data</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>  <span class="c1">## Rounding off errors induced by non-zero H. Not sure-fire but works for now</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span>
+<span class="n">E_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span>
+<span class="n">E_svar</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">l_e</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">E_data</span><span class="p">)</span>
+<span class="n">E_err</span> <span class="o">=</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">E_svar</span><span class="p">)</span>
+
+<span class="n">Mag_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">)</span>
+<span class="n">Mag_svar</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">l_m</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">,</span> <span class="n">ddof</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">)</span>
+<span class="n">Mag_err</span> <span class="o">=</span> <span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mag_svar</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computation time =&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy list: &quot;</span><span class="p">,</span> <span class="n">eset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mag. corr. length: &quot;</span><span class="p">,</span> <span class="n">l_m</span><span class="p">,</span><span class="s2">&quot;, and E. corr. length: &quot;</span><span class="p">,</span><span class="n">l_e</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;avg energy: E = </span><span class="si">{:.4f}</span><span class="s2"> +- </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">E_avg</span><span class="p">,</span><span class="n">E_err</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean energy: E = </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">E_mean</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;avg magnetization: E[|m|] = </span><span class="si">{:.4f}</span><span class="s2"> +- </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">Mag_avg</span><span class="p">,</span><span class="n">Mag_err</span><span class="p">]))</span>
+<span class="c1">#print(&quot;mean magnetization: &lt;E&gt;={:.4f}&quot;.format(Mag_mean))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span> <span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span> <span class="n">bars</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Monte Carlo&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span><span class="n">prob_set</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Theory&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;prob(E)&quot;</span> <span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy dist. at (L,T,H)=</span><span class="si">{</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],[</span><span class="n">E_avg</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Monte Carlo&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],[</span><span class="n">E_mean</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Theory&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">([</span><span class="mi">0</span><span class="p">],[</span><span class="n">E_avg</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">E_err</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean energy at (L,T,H)=</span><span class="si">{</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">400</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+
+<span class="ne">NameError</span>: name &#39;time&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_stop</span><span class="o">=</span><span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">tau_set</span><span class="o">=</span><span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">E_data</span><span class="p">,</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span><span class="n">tau_set</span><span class="p">)</span>
+<span class="c1">#ax.plot(range(time_stop),np_corr_time_set(E_data,time_stop), color=&quot;g&quot;) </span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Sweeps&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Correlation Time&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Integrated Energy Correlation Time for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/21e7384d95aeb5638da380c5766dcb2bc029a764b84a10649b614c636a9b8e87.png" src="_images/21e7384d95aeb5638da380c5766dcb2bc029a764b84a10649b614c636a9b8e87.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="autocorrelations-for-the-metropolis-hastings-algorithm">
+<h1>Autocorrelations for the Metropolis-Hastings algorithm:<a class="headerlink" href="#autocorrelations-for-the-metropolis-hastings-algorithm" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">400</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time:&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 37.513089179992676
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">Mag_autocorr</span> <span class="o">=</span> <span class="n">auto_corr</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">E_autocorr</span> <span class="o">=</span> <span class="n">auto_corr</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total computation time: </span><span class="si">{</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total computation time: 2.0617339611053467
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_stop</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">l_m</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">Mag_autocorr</span><span class="p">[:</span><span class="n">time_stop</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">l_e</span> <span class="o">=</span> <span class="n">exp_corr_len</span><span class="p">(</span><span class="n">E_autocorr</span><span class="p">[:</span><span class="n">time_stop</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Magnetic correlation length is &quot;</span><span class="p">,</span> <span class="n">l_m</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;, and Energy correlation length is&quot;</span><span class="p">,</span> <span class="n">l_e</span><span class="p">)</span>
+
+<span class="n">xrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;magnetization correation&quot;</span><span class="p">,</span> <span class="s2">&quot;energy correlation&quot;</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">Mag_autocorr</span><span class="p">[:</span><span class="n">time_stop</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_autocorr</span><span class="p">[:</span><span class="n">time_stop</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">l_m</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">l_e</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Magnetic correlation length is  12.88671875 , and Energy correlation length is 1.796875
+</pre></div>
+</div>
+<img alt="_images/1341d72e4a03cfcccbb5012a1a2bba105677db47c05ab6b75a55d2ab8444c078.png" src="_images/1341d72e4a03cfcccbb5012a1a2bba105677db47c05ab6b75a55d2ab8444c078.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Mag_corr_time_set</span> <span class="o">=</span> <span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_stop</span><span class="p">)</span>
+<span class="n">E_corr_time_set</span> <span class="o">=</span> <span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">trace</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_stop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;magnetization int. correation time&quot;</span><span class="p">,</span><span class="s2">&quot;magnetic exp correlation time&quot;</span><span class="p">,</span> 
+     <span class="s2">&quot;energy int. correation time&quot;</span><span class="p">,</span><span class="s2">&quot;energy exp correlation time&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">Mag_corr_time_set</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">l_m</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_corr_time_set</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">l_e</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sweeps&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Autocorrelation time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Exponential vs integrated correlation time (in units of N_sites)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3dcb2cedc91f9de2c12183f5521374cf64be9a840e5108613c99a67eb34286eb.png" src="_images/3dcb2cedc91f9de2c12183f5521374cf64be9a840e5108613c99a67eb34286eb.png" />
+</div>
+</div>
+<section id="comparing-metropolis-hastings-wolff-and-heatbath">
+<h2>Comparing Metropolis-Hastings, Wolff, and Heatbath:<a class="headerlink" href="#comparing-metropolis-hastings-wolff-and-heatbath" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">500</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">trace_Metropolis</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time:&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 9.496404886245728
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">trace_Heatbath</span> <span class="o">=</span> <span class="n">Heatbath_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time:&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 9.329224348068237
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">trace_Wolff</span> <span class="o">=</span> <span class="n">Wolff_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time:&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time: 101.10729193687439
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># t0=time()</span>
+<span class="c1"># E_autocorr_M=auto_corr(trace_Metropolis[:,1])</span>
+<span class="c1"># E_autocorr_H=auto_corr(trace_Heatbath[:,1])</span>
+<span class="c1"># E_autocorr_W=auto_corr(trace_Wolff[:,1])</span>
+<span class="c1"># t1=time()</span>
+<span class="c1"># print(f&quot;Total computation time: {t1-t0}&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_stop</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">E_corr_time_set_M</span> <span class="o">=</span> <span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">trace_Metropolis</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_stop</span><span class="p">)</span>
+<span class="n">E_corr_time_set_H</span> <span class="o">=</span> <span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">trace_Heatbath</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_stop</span><span class="p">)</span>
+<span class="n">E_corr_time_set_W</span> <span class="o">=</span> <span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">trace_Wolff</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">time_stop</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total computation time: </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total computation time: 0.8095359802246094
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">xrange</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Metropolis&quot;</span><span class="p">,</span> <span class="s2">&quot;Heatbath&quot;</span><span class="p">,</span> <span class="s2">&quot;Wolff&quot;</span><span class="p">]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_corr_time_set_M</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_corr_time_set_H</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_corr_time_set_W</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Sweeps&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Autocorrelation time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Integrated correlation times (in units of N_sites)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dd9b23ff208456af3b1740ca6720d8891d1d6566a0ddb8d7346dac7a8642df8f.png" src="_images/dd9b23ff208456af3b1740ca6720d8891d1d6566a0ddb8d7346dac7a8642df8f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">xrange</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Wolff&quot;</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xrange</span><span class="p">,</span> <span class="n">E_corr_time_set_W</span><span class="o">/</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Sweeps&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Autocorrelation time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Integrated correlation times (in units of N_sites)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0fbdb34781ab5a199121c2d6cfe70bfc63541583412be8f2cd4f32595c6e99be.png" src="_images/0fbdb34781ab5a199121c2d6cfe70bfc63541583412be8f2cd4f32595c6e99be.png" />
+</div>
+</div>
+</section>
+<section id="correlation-length-and-temperature">
+<h2>Correlation length and temperature<a class="headerlink" href="#correlation-length-and-temperature" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="n">H</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">t_steps</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">T_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">t_steps</span><span class="p">)</span>
+
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">300</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+<span class="n">traces</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">T_range</span><span class="p">:</span>
+    <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">t</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+    <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+
+<span class="n">Mag_data</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">l_m</span><span class="o">=</span><span class="p">[</span><span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">E_data</span><span class="o">=</span><span class="p">[</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">l_e</span><span class="o">=</span><span class="p">[</span><span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">E_data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">E_data</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>  <span class="c1">## Rounding off errors induced by non-zero H. Not sure fire but works for now</span>
+
+<span class="n">E_avg</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">E_svar</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">E_err</span><span class="o">=</span><span class="p">[</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">E_svar</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">Mag_avg</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">Mag_svar</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">Mag_err</span><span class="o">=</span><span class="p">[</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mag_svar</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">s_mean</span><span class="o">=</span><span class="p">[</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">E_data</span><span class="p">]</span>
+<span class="n">s_var</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">E_data</span><span class="p">]</span>
+
+<span class="c1"># Compute exact results </span>
+
+<span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+<span class="n">eset</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">elist</span><span class="p">))</span>
+    
+<span class="n">E_mean</span><span class="o">=</span><span class="p">[</span><span class="nb">sum</span><span class="p">(</span> <span class="p">[</span> <span class="n">e</span><span class="o">*</span><span class="n">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">]</span> <span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">T_range</span><span class="p">]</span>
+<span class="n">E_var</span><span class="o">=</span><span class="p">[</span><span class="nb">sum</span><span class="p">(</span> <span class="p">[</span> <span class="p">(</span><span class="n">e</span><span class="o">-</span><span class="n">E_mean</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T_range</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">H</span><span class="p">,[</span><span class="n">e</span><span class="p">])</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">]</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">T_range</span><span class="p">))]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computation time =&quot;</span> <span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">,</span> <span class="s2">&quot; seconds, &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="p">,</span> <span class="s2">&quot; minutes, or &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;hours.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computation time = 313.27180004119873  seconds,  5.221196667353312  minutes, or  0.08701994445588854 hours.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">E_var</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">s_var</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;MC&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Variance&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Var(E) vs T for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">E_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">s_mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;MC&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;E[Energy] vs T for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7b1994fdc32199dcd8d2d7a22fe481b5b3164165dd0c3354f07ba329e33f76dc.png" src="_images/7b1994fdc32199dcd8d2d7a22fe481b5b3164165dd0c3354f07ba329e33f76dc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">l_e</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">l_m</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Magnetic correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Exponential correlation length&quot;</span> <span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Energy correlation length&quot;</span><span class="p">,</span> <span class="s2">&quot;Magnetic correlation length&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">tau_t_M_set</span><span class="o">=</span><span class="p">[</span><span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">0</span><span class="p">],</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">tau_t_E_set</span><span class="o">=</span><span class="p">[</span><span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">xrange</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+
+<span class="n">tau_M_set</span><span class="o">=</span><span class="p">[</span><span class="n">tau_t_M_set</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tau_t_M_set</span><span class="p">))]</span>
+<span class="n">tau_E_set</span><span class="o">=</span><span class="p">[</span><span class="n">tau_t_E_set</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tau_t_E_set</span><span class="p">))]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">tau_E_set</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">tau_M_set</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Magnetic correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Integrated correlation length&quot;</span> <span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/52f7015a84a12986b245f8266bef0dddedb62eaa30b4cf138efebbee68737a08.png" src="_images/52f7015a84a12986b245f8266bef0dddedb62eaa30b4cf138efebbee68737a08.png" />
+<img alt="_images/7636c5e3548910c34e15df800a541c40203c09828c6cec802d7fd2f1cc135079.png" src="_images/7636c5e3548910c34e15df800a541c40203c09828c6cec802d7fd2f1cc135079.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">,</span><span class="n">H</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">t_steps</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">T_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">t_steps</span><span class="p">)</span>
+
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">N_burnin</span> <span class="o">=</span> <span class="mi">300</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">N_iterations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="o">*</span><span class="n">N_sites</span>
+<span class="n">time_stop</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">N_sites</span>
+
+<span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+<span class="n">traces</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">T_range</span><span class="p">:</span>
+    <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">t</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">Metropolis_update</span><span class="p">(</span><span class="n">hotstart</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="n">beta</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N_burnin</span> <span class="o">+</span> <span class="n">N_iterations</span><span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="n">N_burnin</span><span class="p">:]</span>
+    <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+
+<span class="n">Mag_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">l_m</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">E_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">l_e</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp_corr_len</span><span class="p">(</span><span class="n">auto_corr</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">E_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">E_data</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>  <span class="c1">## Rounding off errors induced by non-zero H. Not sure fire but works for now</span>
+
+<span class="n">E_avg</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">E_svar</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">E_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">E_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">E_svar</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">Mag_avg</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">Mag_svar</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">Mag_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">Mag_err</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mag_svar</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+
+<span class="n">s_mean</span> <span class="o">=</span> <span class="p">[</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">E_data</span><span class="p">]</span>
+<span class="n">s_var</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">e</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">E_data</span><span class="p">]</span>
+
+<span class="c1"># Compute exact results </span>
+
+<span class="c1"># elist = [Ham(M,H) for M in config_gen(L)]</span>
+<span class="c1"># eset = sorted(set(elist))</span>
+    
+<span class="c1"># E_mean = [sum( [ e*prob_E(L,t,H,e) for e in eset] ) for t in T_range]</span>
+<span class="c1"># E_var = [sum( [ (e-E_mean[i])**2*prob_Eset(L,T_range[i],H,[e]) for e in eset] ) for i in range(len(T_range))]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computation time =&quot;</span> <span class="p">,</span> <span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">,</span> <span class="s2">&quot; seconds, &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="p">,</span> <span class="s2">&quot; minutes, or &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;hours.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computation time = 1238.328115940094  seconds,  20.6388020157814  minutes, or  0.3439800335963567 hours.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">s_var</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;MC&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Variance&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Var(E) vs Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span><span class="n">s_mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;MC&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;E[Energy] vs Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bcadac54765e338979d218ecbbcab90a634a46a921274514f8a593bfdb76de4d.png" src="_images/bcadac54765e338979d218ecbbcab90a634a46a921274514f8a593bfdb76de4d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">l_e</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">l_m</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy exponential correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Magnetic exponential correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Correlation length&quot;</span> <span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">tau_t_M_set</span><span class="o">=</span><span class="p">[</span><span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">0</span><span class="p">],</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">tau_t_E_set</span><span class="o">=</span><span class="p">[</span><span class="n">int_corr_time_set</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">))]</span>
+<span class="n">xrange</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_stop</span><span class="p">)</span><span class="o">/</span><span class="n">N_sites</span>
+
+<span class="n">tau_M_set</span><span class="o">=</span><span class="p">[</span><span class="n">tau_t_M_set</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tau_t_M_set</span><span class="p">))]</span>
+<span class="n">tau_E_set</span><span class="o">=</span><span class="p">[</span><span class="n">tau_t_E_set</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tau_t_E_set</span><span class="p">))]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">tau_E_set</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">T_range</span><span class="p">,</span> <span class="n">tau_M_set</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy integrated correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Magnetic integrated correlation length vs. Temp. for L=</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Correlation length&quot;</span> <span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ax</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a1cbc2cf3dff345591d307dd578171b09a3cf45bbf7a491aed548d46f4acd4fb.png" src="_images/a1cbc2cf3dff345591d307dd578171b09a3cf45bbf7a491aed548d46f4acd4fb.png" />
+<img alt="_images/fdbfa4bdc4561b7a686b17f10f7dfc1c82d57e6f1ec8d13ff06f2ffadae59e0d.png" src="_images/fdbfa4bdc4561b7a686b17f10f7dfc1c82d57e6f1ec8d13ff06f2ffadae59e0d.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="MCMC.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Monte Carlo Algorithms</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="IMP_MLE.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Benchmarking against exact results</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effective-sample-size-and-error-of-observable-averages">Effective sample size and error of observable averages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-autocorrelations">Effect of autocorrelations:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#errors-of-non-linear-functions-of-random-variables">Errors of non-linear functions of random variables:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-autocorrelation-time">Computing autocorrelation time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelation-functions">Autocorrelation functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#n-4-energy-histrograms-correlation-length-at-t-3-h-1">N=4 energy histrograms, correlation length at <span class="math notranslate nohighlight">\(T=3,H=1\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelations-for-the-metropolis-hastings-algorithm">Autocorrelations for the Metropolis-Hastings algorithm:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-metropolis-hastings-wolff-and-heatbath">Comparing Metropolis-Hastings, Wolff, and Heatbath:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-length-and-temperature">Correlation length and temperature</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gregory Johnson
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

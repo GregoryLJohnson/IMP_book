@@ -15,32 +15,32 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -49,14 +49,18 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -74,23 +78,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -112,20 +121,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -159,18 +160,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -182,7 +172,18 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Exact Ising Model Computations for Small Lattices</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="MCMC.html">Monte Carlo Algorithms</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="bench.html">Benchmarking against exact results</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="IMP_MLE.html">Maximum Likelihood Estimation - estimating <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(H\)</span></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="IMP_PCA.html">Phase Transitions: Principle Component Analysis and Machine Learning</a></li>
 </ul>
 
     </div>
@@ -198,7 +199,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -207,7 +208,7 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
@@ -378,8 +379,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Exact Ising Model Computations for Small Lattices</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-generator-and-binary-representation-map-for-configurations">Configuration generator and binary representation map for configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model-hamiltonian">Ising model Hamiltonian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-determining-degeneracy-and-probablity-distribution-of-energies">Functions determining degeneracy and probablity distribution of energies</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-complexity-of-lattice-functions">Computational Complexity of Lattice Functions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spin-flip-energy-change-poor-and-best-implemenation">Spin flip energy change (poor and best implemenation)</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -388,7 +399,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="exact-ising-model-computations-for-small-lattices">
 <h1>Exact Ising Model Computations for Small Lattices<a class="headerlink" href="#exact-ising-model-computations-for-small-lattices" title="Permalink to this heading">#</a></h1>
@@ -397,13 +408,13 @@ document.write(`
 <p>For performing a maximum likelihood estimation of the temperature, we will need probablity and log probabilities of specific energies as well as samples of energies. We detail some of this below.</p>
 <p>The probabiltiy of a given energy observation is <span class="math notranslate nohighlight">\(p(E_k)=\mathcal{Z}(\beta)^{-1}\exp(-\beta E_k)\)</span>. Thus, for a random (independent) sample <span class="math notranslate nohighlight">\(\{E_i\}_{i=1,N}\)</span>, <span class="math notranslate nohighlight">\(p(\{X_i\})=\mathcal{Z}(\beta)^{-N}\exp(-\beta \sum_{i=1}^N E_i)\)</span>. Or in terms of the sample mean, <span class="math notranslate nohighlight">\(p(\bar{E})=\mathcal{Z}(\beta)^{-N}\exp(-\beta N \bar{E})\)</span>. This is all well and good for non-degenerate systems, but there is degeracy here since there are multiple configurations (states) which correspond to the same energy.</p>
 <p>To account for this, we introduce a multiplicative factor <span class="math notranslate nohighlight">\(\Omega(E)\)</span> which counts the number of states with energy <span class="math notranslate nohighlight">\(E\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-08d1a458-2c91-4704-bc5e-32c14c12f4b7">
-<span class="eqno">(1)<a class="headerlink" href="#equation-08d1a458-2c91-4704-bc5e-32c14c12f4b7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3e42c0d4-4dd6-4deb-bd0b-41954ce8d525">
+<span class="eqno">(1)<a class="headerlink" href="#equation-3e42c0d4-4dd6-4deb-bd0b-41954ce8d525" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p(E_k)=\mathcal{Z}(\beta)^{-1}\sum_{E=E_k}\exp(-\beta E)=\mathcal{Z}(\beta)^{-1}\Omega(E_k)\exp(-\beta E_k)
 \end{eqnarray}\]</div>
 <p>So then the probability of measuring a sample <span class="math notranslate nohighlight">\(\{E_i\}_{i=1,N}\)</span> becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-394d3eca-4e31-4252-bf32-c2567fcb5f30">
-<span class="eqno">(2)<a class="headerlink" href="#equation-394d3eca-4e31-4252-bf32-c2567fcb5f30" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c5f7d32e-d759-4461-91e5-f83d93c51651">
+<span class="eqno">(2)<a class="headerlink" href="#equation-c5f7d32e-d759-4461-91e5-f83d93c51651" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p(\bar{E})&amp;=&amp; \Pi_{i=1}^N p(E_i)=\mathcal{Z}(\beta)^{-N}\Pi_{i=1}^N \Omega(E_i)\exp(-\beta E_i)
 \end{eqnarray}\]</div>
 <section id="configuration-generator-and-binary-representation-map-for-configurations">
@@ -427,6 +438,353 @@ p(\bar{E})&amp;=&amp; \Pi_{i=1}^N p(E_i)=\mathcal{Z}(\beta)^{-N}\Pi_{i=1}^N \Ome
     <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">))])</span>
 </pre></div>
 </div>
+</div>
+</div>
+</section>
+<section id="ising-model-hamiltonian">
+<h2>Ising model Hamiltonian<a class="headerlink" href="#ising-model-hamiltonian" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Ham</span><span class="p">(</span><span class="n">Latt</span><span class="p">,</span><span class="n">H</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; The Hamiltonian for a square LxL lattice Ising model with</span>
+<span class="sd">    nearest neighbor interactions and magnetic field H. We take J=1 and use scaled temperature $T=J/T$ &#39;&#39;&#39;</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Latt</span><span class="p">)</span> 
+    <span class="n">Sum_H</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Latt</span><span class="p">)</span>
+    <span class="n">Sum_J</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="c1"># move through lattice and compute s_i * neighbors</span>
+            <span class="n">Sum_J</span> <span class="o">+=</span> <span class="o">-</span><span class="n">J</span> <span class="o">*</span> <span class="n">Latt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Latt</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">L</span>, j] + Latt[(i-1)%L, j]
+                                        <span class="o">+</span> <span class="n">Latt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">L</span>]+ Latt[i, (j-1)%L])
+    <span class="k">return</span> <span class="p">(</span> <span class="n">Sum_J</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Sum_H</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="functions-determining-degeneracy-and-probablity-distribution-of-energies">
+<h2>Functions determining degeneracy and probablity distribution of energies<a class="headerlink" href="#functions-determining-degeneracy-and-probablity-distribution-of-energies" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Computes nearest neighbor energies for all configurations for a given N at H=0&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">deg_E</span><span class="p">(</span><span class="n">L</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Counts occurences of each E in E_list(N), returns the set of (E, deg(E)) &#39;&#39;&#39;</span>
+    <span class="n">el</span> <span class="o">=</span> <span class="n">E_list</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">degen</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">el</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">)])</span>
+    <span class="c1">#return [ i for i,j in degen]</span>
+    <span class="k">return</span> <span class="n">degen</span>
+
+<span class="k">def</span> <span class="nf">degen_gen</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="n">L</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Degenracy computation. This is too slow. Best to compute once degen_set and use in later functions&#39;&#39;&#39;</span>
+    <span class="n">degen_set</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">deg_E</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degen_set</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">E</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">degen_set</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># functions below use a global precomputed result for the energies and degeneracies for $L=2,3,4$</span>
+<span class="c1"># In this cell, we compute once and for all the degeneracies used </span>
+
+<span class="n">E_set</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">set</span><span class="p">(</span><span class="n">E_list</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
+<span class="n">degen_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">deg_E</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def part_func(L,T,H):</span>
+<span class="c1">#     &#39;&#39;&#39; The partition function for a square LxL lattice, </span>
+<span class="c1">#     nearest neighbor interactions, at temperature T and magnetic field H &#39;&#39;&#39;</span>
+    
+<span class="c1">#     return np.sum([np.exp(-1/T*Ham(M,H)) for M in config_gen(L) ])</span>
+
+<span class="k">def</span> <span class="nf">prob_E</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">E</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; A function to the compute probabiliy of given energy E of </span>
+<span class="sd">    a square LxL lattice, nearest neighbor interactions, at temperature T and magnetic field H &#39;&#39;&#39;</span>
+    
+    <span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">degen_set_here</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">degen_set</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">H</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">el</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+        <span class="n">degen_set_here</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">el</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">)])</span>
+    <span class="k">def</span> <span class="nf">degen</span><span class="p">(</span><span class="n">Es</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degen_set_here</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Es</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">degen_set_here</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">part_func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">g</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">g</span> <span class="ow">in</span> <span class="n">degen_set_here</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">part_func</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">degen</span><span class="p">(</span><span class="n">E</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">E</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">E_samples</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; A function to compute the probabiliy of a given sample of energies E_samples</span>
+<span class="sd">    of a square LxL lattice, nearest neighbor interactions, at temperature T and magnetic field H &#39;&#39;&#39;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">degen_set_here</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">degen_set</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">H</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">el</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+        <span class="n">degen_set_here</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">el</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">)])</span>
+    <span class="k">def</span> <span class="nf">degen</span><span class="p">(</span><span class="n">Es</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degen_set_here</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Es</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">degen_set_here</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">part_func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">g</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">g</span> <span class="ow">in</span> <span class="n">degen_set_here</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">part_func</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span> <span class="p">[(</span><span class="n">degen</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">E_samples</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">log_prob_Eset</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">E_samples</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; A function to compute the log-probabiliy of a given sample of energies E_samples</span>
+<span class="sd">    of a square LxL lattice, nearest neighbor interactions, at temperature T and magnetic field H &#39;&#39;&#39;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">degen_set_here</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">degen_set</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">H</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">el</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+        <span class="n">degen_set_here</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">el</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">)])</span>
+    <span class="k">def</span> <span class="nf">degen</span><span class="p">(</span><span class="n">Es</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degen_set_here</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Es</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">degen_set_here</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">part_func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">g</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">g</span> <span class="ow">in</span> <span class="n">degen_set_here</span><span class="p">])</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">part_func</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">E_samples</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">E</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">E</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">degen</span><span class="p">(</span><span class="n">E</span><span class="p">))</span>  <span class="p">)</span> <span class="k">for</span> <span class="n">E</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">E_samples</span><span class="p">)</span> <span class="p">])</span>     
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def mean_E(L,T,H):</span>
+<span class="c1">#     &#39;&#39;&#39; Computes mean energy for (L,T,H)&#39;&#39;&#39;</span>
+<span class="c1">#     i = [2,3,4].index(L)</span>
+<span class="c1">#     el = sorted(list(set(E_list(L))))</span>
+<span class="c1">#     degen_set_here = np.array(degen_set[i])</span>
+<span class="c1">#     if H != 0:</span>
+<span class="c1">#         el = [ Ham(M,H) for M in config_gen(L)]</span>
+<span class="c1">#         degen_set_here = np.array([ (x,el.count(x)) for x in set(el)])</span>
+<span class="c1">#     def degen(Es):</span>
+<span class="c1">#         j = np.where(degen_set_here[:,0] == Es)[0][0]</span>
+<span class="c1">#         return degen_set_here[j][1]</span>
+<span class="c1">#     return part_func(L,T,H)**(-1)*np.sum([e*degen(e)*np.exp(-1/T*e) for e in el])</span>
+
+<span class="c1"># def var_E(L,T,H):</span>
+<span class="c1">#     &#39;&#39;&#39;Computes variation of energy for (L,T,H)&#39;&#39;&#39;</span>
+<span class="c1">#     i = [2,3,4].index(L)</span>
+<span class="c1">#     el = sorted(list(set(E_list(L))))</span>
+<span class="c1">#     e_mean = mean_E(L,T,H)</span>
+<span class="c1">#     degen_set_here=np.array(degen_set[i])</span>
+<span class="c1">#     if H != 0:</span>
+<span class="c1">#         el = [ Ham(M,H) for M in config_gen(L)]</span>
+<span class="c1">#         degen_set_here = np.array([ (x,el.count(x)) for x in set(el)])</span>
+<span class="c1">#     def degen(Es):</span>
+<span class="c1">#         j = np.where(degen_set_here[:,0] == Es)[0][0]</span>
+<span class="c1">#         return degen_set_here[j][1]</span>
+<span class="c1">#     return part_func(L,T,H)**(-1)*np.sum([(e-e_mean)**2*degen(e)*np.exp(-1/T*e) for e in el])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1">## compute histrogram and exact probablities</span>
+<span class="c1">#elist = list(sorted(set([ Ham(M,J_NN,H) for M in config_gen(N)])))</span>
+<span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+<span class="n">eset</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">elist</span><span class="p">))</span>
+<span class="n">degeneracies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">elist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">])</span>
+
+<span class="n">partition_function</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elist</span> <span class="p">])</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">eset</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eset</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degeneracies</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">degen</span> <span class="o">=</span> <span class="n">degeneracies</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">prob_set</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">partition_function</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">degen</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span><span class="n">prob_set</span><span class="p">)]</span> <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy list: &quot;</span><span class="p">,</span> <span class="n">eset</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Theory&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;prob(E)&quot;</span> <span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy distribution at (L,T,H)=</span><span class="si">{</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">## compute histrogram and exact probablities</span>
+<span class="nn">      4 #elist = list(sorted(set([ Ham(M,J_NN,H) for M</span> in <span class="ni">config_gen</span><span class="nt">(N)])))</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## compute histrogram and exact probablities</span>
+<span class="c1">#elist = list(sorted(set([ Ham(M,J_NN,H) for M in config_gen(N)])))</span>
+<span class="n">L</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">T</span>
+<span class="n">N_sites</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ham</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">)</span> <span class="k">for</span> <span class="n">M</span> <span class="ow">in</span> <span class="n">config_gen</span><span class="p">(</span><span class="n">L</span><span class="p">)]</span>
+<span class="n">eset</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">elist</span><span class="p">))</span>
+<span class="n">degeneracies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">elist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eset</span><span class="p">])</span>
+
+<span class="n">partition_function</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elist</span> <span class="p">])</span>
+<span class="n">prob_set</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">eset</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eset</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">degeneracies</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">degen</span> <span class="o">=</span> <span class="n">degeneracies</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">prob_set</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">partition_function</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">degen</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">T</span><span class="o">*</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">E_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">e</span><span class="o">*</span><span class="n">p</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span><span class="n">prob_set</span><span class="p">)]</span> <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy list: &quot;</span><span class="p">,</span> <span class="n">eset</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">eset</span><span class="p">,</span> <span class="n">prob_set</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Theory&quot;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;prob(E)&quot;</span> <span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Energy distribution at (L,T,H)=</span><span class="si">{</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Energy list:  [-32.16, -31.84, -24.14, -23.86, -20.12, -19.88, -16.12, -16.1, -16.08, -16.0, -15.92, -15.9, -15.88, -12.1, -12.08, -12.06, -12.04, -12.02, -11.98, -11.96, -11.94, -11.92, -11.9, -8.1, -8.08, -8.06, -8.04, -8.02, -8.0, -7.98, -7.96, -7.94, -7.92, -7.9, -4.08, -4.06, -4.04, -4.02, -4.0, -3.98, -3.96, -3.94, -3.92, -0.08, -0.06, -0.04, -0.02, 0.0, 0.02, 0.04, 0.06, 0.08, 3.94, 3.96, 3.98, 4.0, 4.02, 4.04, 4.06, 7.94, 7.96, 7.98, 8.0, 8.02, 8.04, 8.06, 11.96, 11.98, 12.0, 12.02, 12.04, 15.96, 15.98, 16.0, 16.02, 16.04, 20.0, 23.98, 24.02, 32.0]
+</pre></div>
+</div>
+<img alt="_images/d2fbf5e7a20bc1d75240007f194d0e9b0962d26300c747b3ab421664181cdc62.png" src="_images/d2fbf5e7a20bc1d75240007f194d0e9b0962d26300c747b3ab421664181cdc62.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="computational-complexity-of-lattice-functions">
+<h1>Computational Complexity of Lattice Functions<a class="headerlink" href="#computational-complexity-of-lattice-functions" title="Permalink to this heading">#</a></h1>
+<p>Below we will demonstrate that for nearest neighbor interaction, we can reduce the complexity of the spin-flip energy computation from <span class="math notranslate nohighlight">\(\mathcal{O}(N^2)\)</span> to <span class="math notranslate nohighlight">\(\mathcal{O}(1)\)</span>. The <span class="math notranslate nohighlight">\(L^2\)</span> behavior is due to the scan over the 2D lattice to find the neareast neighbors. Computing the Hamiltonaian this way (which is neccesary for general spin interactions) would have an even larger dependence on L - <span class="math notranslate nohighlight">\(\mathcal{O}(L^4)\)</span> due to summing interaction of each of the <span class="math notranslate nohighlight">\(L^2\)</span> spins with all <span class="math notranslate nohighlight">\(L^2\)</span> other spins.</p>
+<section id="spin-flip-energy-change-poor-and-best-implemenation">
+<h2>Spin flip energy change (poor and best implemenation)<a class="headerlink" href="#spin-flip-energy-change-poor-and-best-implemenation" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">spin_flip_poor</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">u</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="n">Sum_H</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="o">*</span><span class="n">M</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>
+    <span class="n">Sum_J</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span>  <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">a</span><span class="o">+</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">a</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="n">b</span><span class="p">):</span>
+                <span class="n">Sum_J</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">J</span><span class="o">*</span><span class="n">M</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span><span class="o">*</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="k">L</span>, j%L]
+    <span class="k">return</span> <span class="p">(</span> <span class="n">Sum_J</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Sum_H</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">spin_flip</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">u</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="n">Sum_H</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="o">*</span><span class="n">M</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span>
+    <span class="n">Sum_J</span> <span class="o">=</span> <span class="o">-</span> <span class="n">J</span><span class="o">*</span><span class="n">M</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">L</span>] + M[a,(b-1)%L] + M[(a+1)%L,b] + M[(a-1)%L,b] )
+    <span class="k">return</span> <span class="p">(</span> <span class="n">Sum_J</span> <span class="o">+</span> <span class="n">Sum_H</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">N_check</span><span class="o">=</span><span class="mi">10000</span>
+<span class="n">N_range</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">time_data</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">N_range</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_range</span><span class="p">)):</span>
+    <span class="n">N</span><span class="o">=</span><span class="n">N_range</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+    <span class="p">[</span><span class="n">spin_flip</span><span class="p">(</span><span class="n">coldstart</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="mi">0</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_check</span><span class="p">)]</span>
+    <span class="n">t1</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">time_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="n">N_check</span>
+    <span class="c1">#print((t1-t0)/N_check)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">par</span><span class="p">,</span><span class="n">con</span><span class="o">=</span><span class="n">curve_fit</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="p">),</span><span class="n">N_range</span><span class="p">,</span><span class="n">time_data</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">par</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> x&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">N_range</span><span class="p">,</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="p">)(</span><span class="n">N_range</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;linear fit&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">N_range</span><span class="p">,</span> <span class="n">time_data</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Linear lattice size&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Optimized spin flip energy computation time&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y = 2.213093688938631e-06 + -2.0378556079555698e-08 x
+</pre></div>
+</div>
+<img alt="_images/5a46631d7af39c5f8b635510eb8252cf7743d027de9c9d570f94be0250134400.png" src="_images/5a46631d7af39c5f8b635510eb8252cf7743d027de9c9d570f94be0250134400.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_check</span><span class="o">=</span><span class="mi">10000</span>
+<span class="n">N_range</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">time_data</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">N_range</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_range</span><span class="p">)):</span>
+    <span class="n">N</span><span class="o">=</span><span class="n">N_range</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+    <span class="p">[</span><span class="n">spin_flip_poor</span><span class="p">(</span><span class="n">coldstart</span><span class="p">(</span><span class="n">N</span><span class="p">),</span><span class="mi">0</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_check</span><span class="p">)]</span>
+    <span class="n">t1</span><span class="o">=</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">time_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="n">N_check</span>
+    <span class="c1">#print((t1-t0)/N_check)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">par</span><span class="p">,</span><span class="n">con</span><span class="o">=</span><span class="n">curve_fit</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">:</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">),</span><span class="n">N_range</span><span class="p">,</span><span class="n">time_data</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">par</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">x^2+</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">x+</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">N_range</span><span class="p">,(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">:</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">)(</span><span class="n">N_range</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;quadratic fit&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">N_range</span><span class="p">,</span><span class="n">time_data</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Linear lattice size&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Full scan spin-flip energy computation time&quot;</span> <span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y=2.584985442587021e-07x^2+1.4039010500451102e-07x+2.925868155680966e-06
+</pre></div>
+</div>
+<img alt="_images/a48465d2888256b2a99e50ac08c768fd862ba2c6b85769837414a19bd5fdc3c8.png" src="_images/a48465d2888256b2a99e50ac08c768fd862ba2c6b85769837414a19bd5fdc3c8.png" />
 </div>
 </div>
 </section>
@@ -459,7 +817,7 @@ p(\bar{E})&amp;=&amp; \Pi_{i=1}^N p(E_i)=\mathcal{Z}(\beta)^{-N}\Pi_{i=1}^N \Ome
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -489,15 +847,24 @@ p(\bar{E})&amp;=&amp; \Pi_{i=1}^N p(E_i)=\mathcal{Z}(\beta)^{-N}\Pi_{i=1}^N \Ome
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Exact Ising Model Computations for Small Lattices</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-generator-and-binary-representation-map-for-configurations">Configuration generator and binary representation map for configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model-hamiltonian">Ising model Hamiltonian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-determining-degeneracy-and-probablity-distribution-of-energies">Functions determining degeneracy and probablity distribution of energies</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-complexity-of-lattice-functions">Computational Complexity of Lattice Functions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spin-flip-energy-change-poor-and-best-implemenation">Spin flip energy change (poor and best implemenation)</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
@@ -545,8 +912,8 @@ By Gregory Johnson
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
