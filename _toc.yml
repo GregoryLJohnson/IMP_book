@@ -6,3 +6,6 @@ root: intro
 chapters:
 - file: exact
 - file: MCMC
+- file: bench
+- file: IMP_MLE
+- file: IMP_PCA

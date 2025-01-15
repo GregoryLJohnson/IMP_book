@@ -1,5 +1,8 @@
 jupyter-book
 matplotlib
 numpy
+pandas
 networkx
-itertools
+scikit-learn
+joblib
+multiprocessingjb
